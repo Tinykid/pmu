@@ -1,9 +1,10 @@
 #include "PmuEnterPage.h"
 
-PmuEnterPage::PmuEnterPage(ConnectToServer* connectToServer)
+PmuEnterPage::PmuEnterPage(ConnectToServer* connectToServer,CurrentAction* currentAction)
     : QWidget()
 {
     this->connectToServer = connectToServer;
+    this->currentAction = currentAction;
 
     this->initVariable();
     this->constructIHM();
@@ -24,7 +25,7 @@ void PmuEnterPage::initVariable(){
     this->width = screen->availableSize().width();
     this->caracterStyle = new QFont("Segoe UI", 17, QFont::AnyStyle, false);
 
-    this->regAndSignPage = new RegAndSignPage(width, height, flag, this->connectToServer);
+    this->regAndSignPage = new RegAndSignPage(width, height, flag, this->connectToServer, this->currentAction);
     this->pmuHomeTabPage = new PmuHomeTabPage(width, height, caracterStyle);
     //this->regAndSignPage = new RegAndSignPage(width, height, flag);
     this->coursePublishPage = new CoursePublishPage(width, height, caracterStyle);
@@ -90,46 +91,45 @@ void PmuEnterPage::constructIHM(){
     this->welcomLabel = new QLabel("學  滴  野");
    // this->welcomLabel->setFixedHeight(height * 0.2);
     this->welcomLabel->setFont(QFont("华文行楷", 50, QFont::Bold, false));
-    this->welcomLabel->setStyleSheet("background-color:transparent; color: aliceblue");
+    this->welcomLabel->setStyleSheet("background-color:transparent; color: AliceBlue");
     this->welcomLabel->setAlignment(Qt::AlignCenter);
 
     this->searchingLineEdit = new QLineEdit();
     this->searchingLineEdit->setFixedHeight(height*0.053);
     this->searchingLineEdit->setPlaceholderText("輸入學科、分類");
-    this->searchingLineEdit->setStyleSheet("QLineEdit { color:AliceBlue; border: 0px solid Gray; border-radius: 0px; color:rgb(0, 0, 0); background-color: azure; } "
-                                           "QLineEdit:focus{border-style:outset; border-width:0px; border-radius: 0px; border-color: rgb(41, 237, 215); color:rgb(0, 0, 0); background-color: azure; } ");
+    this->searchingLineEdit->setStyleSheet("QLineEdit { color:AliceBlue; border: 0px solid Gray; border-radius: 15px; color:rgb(0, 0, 0); background-color: silver aerogel; } "
+                                           "QLineEdit:focus{border-style:outset; border-width:0px; border-radius: 15px; border-color: rgb(41, 237, 215); color:rgb(0, 0, 0); background-color: azure; } ");
 
     this->searchingButton = new QPushButton();
     this->searchingButton->setFixedSize(width*0.092,height*0.053);
     this->searchingButton->setIconSize(QSize(width*0.092,height*0.053));
-    this->searchingButton->setStyleSheet("QPushButton{border-image: url(:/images/searchButton.png); background-color:AliceBlue;border: 0px;}"
-                                         "QPushButton:pressed{border-image: url(:/images/searchButton1.png);background-color:AliceBlue;border: 0px;}"
+    this->searchingButton->setStyleSheet("QPushButton{border-image: url(:/images/search.png); color:AliceBlue;background-color:AliceBlue;border: 0px; border-radius: 15px;}"
+                                         "QPushButton:pressed{border-image: url(:/images/search1.png);color:AliceBlue;background-color:silver aerogel;border: 0px;border-radius: 15px;}"
                                          "QPushButton:focus{padding: -2;}");
 
     this->optionCombox = new QComboBox();
-    this->optionCombox->setFixedSize(width*0.18, height*0.053);
+    this->optionCombox->setFixedSize(width*0.16, height*0.053);
+    this->optionCombox->setFont(*caracterStyle);
     this->optionCombox->insertItem(0,"語言");
     this->optionCombox->insertItem(1,"音樂");
     this->optionCombox->insertItem(2,"舞蹈");
-    this->optionCombox->setStyleSheet( "QComboBox{color:gray;background-color:transparent;border:0px;border-radius:0px;padding:0px;}"
+    this->optionCombox->setStyleSheet( "QComboBox{color:gray;background-color:silver aerogel;border:0px;border-radius:15px;padding:0px;}"
                                        //"QComboBox QListView{ border-style: none; background-color: qlineargradient(x1:0, y1:0, x2:1,y2:0, stop: 1 rgba(228, 41, 81, 100), stop: 0 rgba(234, 107, 101, 100));}"
-                                       "QComboBox::drop-down{width: 88px;border: 0px;border-color:trantransparent;border-left-style:solid;border-top-style: none;border-bottom-style: none;border-right-style: none;}"
+                                       "QComboBox::drop-down{width: 50px;border: 0px;border-radius:15px;border-color:AliceBlue;border-bottom-right-radius: 15px;border-top-right-radius:15px;border-left-style:solid;border-top-style: none;border-bottom-style: none;border-right-style: none;}"
                                        "QComboBox::down-arrow{image: url(:/images/down.png);}"
-                                       "QComboBox::down-arrow{width:72; height:72}"
-                                       "QComboBox::down-arrow:on { top: 1px;left: 1px;}");
+                                       "QComboBox::down-arrow{width:40; height:40}");
     this->searchingBar = new QFrame();
-    this->searchingBar->setStyleSheet("background-color:transparent; color:AliceBlue; border: 0px ; ");
+    this->searchingBar->setStyleSheet("background-color:AliceBlue; color:AliceBlue; border: 1px solid aliceblue ;border-radius:15px; ");
     this->searchingBar->setFixedHeight(height*0.053);
     this->searchingBarLayout = new QHBoxLayout(this->searchingBar);
     this->searchingBarLayout->addWidget(this->searchingLineEdit);
     this->searchingBarLayout->addWidget(this->searchingButton);
-    this->searchingBarLayout->addStretch();
     this->searchingBarLayout->addWidget(this->optionCombox);
     this->searchingBarLayout->setSpacing(0);
     this->searchingBarLayout->setMargin(0);
 
     this->enterHomePageButton = new QPushButton("進入主頁");
-    this->enterHomePageButton->setStyleSheet("QPushButton{background-color:transparent; color: aliceblue; border: 1px solid white; border-radius:16px}"
+    this->enterHomePageButton->setStyleSheet("QPushButton{background-color:silver aerogel; color: aliceblue; border: 1px solid white; border-radius:16px}"
                                              "QPushButton:focus{padding: -3;}");
     this->enterHomePageButton->setFixedSize(width*0.28,height*0.053);
 

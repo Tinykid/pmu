@@ -22,20 +22,24 @@
 #include "RegAndSignPage.h"
 #include "CoursePublishPage.h"
 #include "ConnectToServer.h"
+#include "CurrentAction.h"
 
 
-class PmuEnterPage : public QWidget{
+class PmuEnterPage : public QWidget
+{
     Q_OBJECT
 
 public:
-    PmuEnterPage(ConnectToServer* connectToServer);
+    PmuEnterPage(ConnectToServer* connectToServer, CurrentAction* currentAction);
     ~PmuEnterPage();
+
     void initVariable();
     void constructIHM();
     void drawBackground();
     void setConnections();
     void creatDialogWidget();
 private:
+    CurrentAction* currentAction;
     ConnectToServer* connectToServer;
 
     int width;

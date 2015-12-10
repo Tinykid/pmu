@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QListWidget>
+#include "PmuTitleBar.h"
 
 class MyRssCourse: public QWidget
 {
@@ -15,15 +16,11 @@ public:
     void constructIHM();
     void setConnections();
 private:
+    PmuTitleBar *titleBarWidget;
     int width;
     int height;
 
     QVBoxLayout *myRssCoursePageLayout;
-    QHBoxLayout *titleBarLayout;
-
-    QWidget *titleBarWidget;
-    QLabel *titleBarLabel;
-    QPushButton *returnButton;
     QListWidget *myRssCourseWidget;
 private slots:
 

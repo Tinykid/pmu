@@ -9,6 +9,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
+#include "PmuTitleBar.h"
 
 class MySchedulePage : public QWidget
 {
@@ -20,19 +21,15 @@ public:
     void setConnections();
     //void drawBackground();
 private:
+    PmuTitleBar *titleBarWidget;
     int width;
     int height;
 
     QVBoxLayout *mySchedulePageLayout;
-    QHBoxLayout *titleBarLayout;
     QHBoxLayout *searchBarLayout;
 
-    QWidget *titleBarWidget;
     QWidget *searchBarWidget;
     QWidget *scheduleWidget;
-
-    QPushButton *returnButton;
-    QLabel *titleLabel;
 
     QLineEdit *searchLineEdit;
     QPushButton *searchButton;

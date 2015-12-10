@@ -6,13 +6,13 @@ HottipsWidget::HottipsWidget(int width, int height){
     this->height = height;
 
     listWidget = new QListWidget();
-    listWidget->setStyleSheet("QListWidget {show-decoration-selected: 2;background: transparent; border:1px solid gainsboro; color: skyBlue}"
+    listWidget->setStyleSheet("QListWidget {show-decoration-selected: 2;background: #CCFFFF; border:1px solid gainsboro; color: black}"
                               "QListWidget::item:alternate { background: transparent;}"
                               "QListWidget::item:selected {border: 0px;}"
                               "QListWidget::item:selected:!active {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 lightBlue, stop: 1 skyBlue);color:skyBlue}"
                               "QListWidget::item:selected:active {background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 lightBlue, stop: 1 skyBlue);color:skyBlue}"
                               "QScrollBar:vertical {border: 0px; background: transparent; width: 20px;}"
-                              "QScrollBar::handle:vertical {background: #8080FF; border-radius:10px;min-height: 10px;}"
+                              "QScrollBar::handle:vertical {background: #C4C4C4; border-radius:10px;min-height: 10px;}"
                               "QScrollBar::add-line:vertical {height: 0px;subcontrol-position: bottom;}"
                               "QScrollBar::sub-line:vertical {height: 0px; subcontrol-position: top;}"
                               "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: transparent;}"
@@ -22,9 +22,8 @@ HottipsWidget::HottipsWidget(int width, int height){
     listWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     listWidget->setAcceptDrops(true);
-    listWidget->setFont(QFont("Segoe UI", 15, QFont::AnyStyle, true));
+    //listWidget->setFont(QFont("Segoe UI", 15, QFont::AnyStyle, true));
     listWidget->setWordWrap(true);
-    listWidget->setDragEnabled(false);
     listWidget->setIconSize(QSize(this->width*0.3,this->height*0.52*0.26));
     listWidget->setSpacing(height*0.001);
     sportItem = new QListWidgetItem(QIcon(QPixmap(":/images/yu.png").scaled(QSize(this->width*0.3,this->height*0.52*0.24))),"  杜月，2009年碩士畢業，從事教育行業5年，主講數學",listWidget);

@@ -10,11 +10,51 @@ MyOwnPage::MyOwnPage(int width, int height)
     this->setConnections();
 }
 
-MyOwnPage::~MyOwnPage()
-{
+MyOwnPage::~MyOwnPage(){}
+
+//!-----------------------------------------------------------------------------------------
+//!
+//! \brief MyOwnPage::modifierPersonnelImage
+//!
+void MyOwnPage::modifierPersonnelImage(){
+    this->createDialog();
+    this->optionDialog->show();
+}
+
+//!-----------------------------------------------------------------------------------------
+//!
+//! \brief MyOwnPage::createDialog
+//!
+void MyOwnPage::createDialog(){
+    this->selectFromCamera = new CLabel();
+    this->selectFromCamera->setText("拍 照");
+    this->selectFromCamera->setFont(QFont("Segoe UI",20,QFont::Normal,false));
+    this->selectFromCamera->setAlignment(Qt::AlignCenter);
+    this->selectFromCamera->setStyleSheet("color: aliceblue; border-bottom: 1px solid white");
+
+    this->selectFromPhotos = new CLabel();
+    this->selectFromPhotos->setText("從相冊選擇");
+    this->selectFromPhotos->setFont(QFont("Segoe UI",20,QFont::Normal,false));
+    this->selectFromPhotos->setAlignment(Qt::AlignCenter);
+    this->selectFromPhotos->setStyleSheet("color: aliceblue; border-top: 1px solid white");
+
+    this->optionDialog = new QDialog();
+    this->optionDialog->setStyleSheet("background-color:#6495ED; color:AliceBlue; ");
+    this->optionDialog->setAttribute(Qt::WA_ShowModal, true);
+    this->optionDialog->setFixedSize(width*0.6, height*0.22);
+    this->optionDialogLayout = new QVBoxLayout(optionDialog);
+    this->optionDialogLayout->addWidget(selectFromCamera);
+    this->optionDialogLayout->addWidget(selectFromPhotos);
+    this->optionDialogLayout->setMargin(0);
+    this->optionDialogLayout->setSpacing(0);
 
 }
 
+
+//!-----------------------------------------------------------------------------------------
+//!
+//! \brief MyOwnPage::initial
+//!
 void MyOwnPage::initial(){
     characterStyle = new QFont("Segoe UI" , 18, QFont::Normal, false);
     toolButtonStyle = "QToolButton{padding-top:" + QString::number(height*0.02) + ";padding-bottom:" + QString::number(height*0.02) + ";border:none;color:rgb(135,209,199);background-color:transparent;}";
@@ -28,10 +68,10 @@ void MyOwnPage::initial(){
 //!
 void MyOwnPage::constructIHM(){
 
-    //idLabel = new QLabel("My Info");
-    //idLabel->setFont(*caracterStyle);
-    idAvatarLabel = new QLabel();
-    idAvatarLabel->setPixmap(QPixmap(":/images/boduo.png"));
+    idAvatarCLabel = new CLabel();
+    idAvatarCLabel->setAlignment(Qt::AlignCenter);
+    idAvatarCLabel->setFixedSize(width*0.32,height*0.2);
+    idAvatarCLabel->setStyleSheet("background-color:transparent; color:AliceBlue; border: 0px;border-image:url(:/images/avatar.png)");
 
     idAccountLabel = new QLabel("姓名");
     idAccountLabel->setFont(*characterStyle);
@@ -41,85 +81,85 @@ void MyOwnPage::constructIHM(){
     idEmailLabel->setFont(*characterStyle);
     idEmailLabel->setAlignment(Qt::AlignCenter);
 
-
     idWidget = new QWidget();
     idWidget->setFixedHeight(0.556*height);
     idWidget->setStyleSheet("background-color:#9999CC");
     idLayout = new QVBoxLayout(idWidget);
     idLayout->setAlignment(Qt::AlignCenter);
-    idLayout->addWidget(idAvatarLabel);
+    idLayout->addWidget(idAvatarCLabel);
     idLayout->addWidget(idAccountLabel);
     idLayout->addWidget(idEmailLabel);
 
-    fButton = new QToolButton(this);
-    fButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    fButton->setIcon(QIcon(":/images/publishCourse.png"));
-    fButton->setIconSize(QSize(0.25*width, 0.08*height));
-    fButton->setText("我發布的課程");
-    fButton->setStyleSheet(toolButtonStyle);
-    fButton->setFixedSize(0.5*width, 0.192*height);
+    myPublishedButton = new QToolButton(this);
+    myPublishedButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    myPublishedButton->setIcon(QIcon(":/images/publishCourse.png"));
+    myPublishedButton->setIconSize(QSize(0.25*width, 0.08*height));
+    myPublishedButton->setText("我發布的課程");
+    myPublishedButton->setStyleSheet(toolButtonStyle);
+    myPublishedButton->setFixedSize(0.5*width, 0.192*height);
 
-    sButton = new QToolButton(this);
-    sButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    sButton->setIcon(QIcon(":/images/rss.png"));
-    sButton->setIconSize(QSize(0.25*width, 0.08*height));
-    sButton->setText("我訂閱的課程");
-    sButton->setStyleSheet(toolButtonStyle);
-    sButton->setFixedSize(0.5*width, 0.192*height);
+    myRssButton = new QToolButton(this);
+    myRssButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    myRssButton->setIcon(QIcon(":/images/rss.png"));
+    myRssButton->setIconSize(QSize(0.25*width, 0.08*height));
+    myRssButton->setText("我訂閱的課程");
+    myRssButton->setStyleSheet(toolButtonStyle);
+    myRssButton->setFixedSize(0.5*width, 0.192*height);
 
-    tButton = new QToolButton(this);
-    tButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    tButton->setIcon(QIcon(":/images/schedule.png"));
-    tButton->setIconSize(QSize(0.25*width, 0.08*height));
-    tButton->setText("我的課程表");
-    tButton->setStyleSheet(toolButtonStyle);
-    tButton->setFixedSize(0.5*width, 0.192*height);
+    myScheduleButton = new QToolButton(this);
+    myScheduleButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    myScheduleButton->setIcon(QIcon(":/images/schedule.png"));
+    myScheduleButton->setIconSize(QSize(0.25*width, 0.08*height));
+    myScheduleButton->setText("我的課程表");
+    myScheduleButton->setStyleSheet(toolButtonStyle);
+    myScheduleButton->setFixedSize(0.5*width, 0.192*height);
 
-    foButton = new QToolButton(this);
-    foButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    foButton->setIcon(QIcon(":/images/history.png"));
-    foButton->setIconSize(QSize(0.25*width, 0.08*height));
-    foButton->setText("瀏覽歷史");
-    foButton->setStyleSheet(toolButtonStyle);
-    foButton->setFixedSize(0.5*width, 0.192*height);
+    historyButton = new QToolButton(this);
+    historyButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    historyButton->setIcon(QIcon(":/images/history.png"));
+    historyButton->setIconSize(QSize(0.25*width, 0.08*height));
+    historyButton->setText("瀏覽歷史");
+    historyButton->setStyleSheet(toolButtonStyle);
 
-    fWidget = new QWidget();
-    fWidget->setStyleSheet("background-color:transparent;border-bottom:1px solid Gray;border-right:1px solid Gray");
-    fLayout = new QVBoxLayout(fWidget);
-    fLayout->setSpacing(0);
-    fLayout->setMargin(0);
-    fLayout->setAlignment(Qt::AlignCenter);
-    fLayout->addWidget(fButton);
+    historyButton->setFixedSize(0.5*width, 0.192*height);
 
-    sWidget = new QWidget();
-    sWidget->setStyleSheet("background-color:transparent; border-bottom:1px solid Gray");
-    sLayout = new QVBoxLayout(sWidget);
-    sLayout->setSpacing(0);
-    sLayout->setMargin(0);
-    sLayout->addWidget(sButton);
+    myPublishedWidget = new QWidget();
+    myPublishedWidget->setStyleSheet("background-color:transparent;border-bottom:1px solid Gray;border-right:1px solid Gray");
+    myPublishedLayout = new QVBoxLayout(myPublishedWidget);
+    myPublishedLayout->setSpacing(0);
+    myPublishedLayout->setMargin(0);
+    myPublishedLayout->setAlignment(Qt::AlignCenter);
+    myPublishedLayout->addWidget(myPublishedButton);
 
-    tWidget = new QWidget();
-    tWidget->setStyleSheet("background-color:transparent; border-right:1px solid Gray");
-    tLayout = new QVBoxLayout(tWidget);
-    tLayout->setMargin(0);
-    tLayout->setSpacing(0);
-    tLayout->addWidget(tButton);
+    myRssWidget = new QWidget();
+    myRssWidget->setStyleSheet("background-color:transparent; border-bottom:1px solid Gray");
+    myRssLayout = new QVBoxLayout(myRssWidget);
+    myRssLayout->setSpacing(0);
+    myRssLayout->setMargin(0);
+    myRssLayout->addWidget(myRssButton);
 
-    foWidget = new QWidget();
-    foWidget->setStyleSheet("background-color:transparent;");
-    foLayout = new QVBoxLayout(foWidget);
-    foLayout->setMargin(0);
-    foLayout->setSpacing(0);
-    foLayout->addWidget(foButton);
+    myScheduleWidget = new QWidget();
+    myScheduleWidget->setStyleSheet("background-color:transparent; border-right:1px solid Gray");
+    myScheduleLayout = new QVBoxLayout(myScheduleWidget);
+    myScheduleLayout->setMargin(0);
+    myScheduleLayout->setSpacing(0);
+    myScheduleLayout->addWidget(myScheduleButton);
+
+    historyWidget = new QWidget();
+    historyWidget->setStyleSheet("background-color:transparent;");
+    historyLayout = new QVBoxLayout(historyWidget);
+    historyLayout->setMargin(0);
+    historyLayout->setSpacing(0);
+    historyLayout->addWidget(historyButton);
 
     courseInfoWidget = new QWidget();
     //courseInfoWidget->setStyleSheet("background-color:transparent");
     courseInfoWidget->setFixedHeight(0.384*height);
     coursesLayout =new QGridLayout(courseInfoWidget);
-    coursesLayout->addWidget(fWidget,0,0);
-    coursesLayout->addWidget(sWidget,0,1);
-    coursesLayout->addWidget(tWidget,1,0);
-    coursesLayout->addWidget(foWidget,1,1);
+    coursesLayout->addWidget(myPublishedWidget,0,0);
+    coursesLayout->addWidget(myRssWidget,0,1);
+    coursesLayout->addWidget(myScheduleWidget,1,0);
+    coursesLayout->addWidget(historyWidget,1,1);
     coursesLayout->setSpacing(0);
     coursesLayout->setMargin(0);
 
@@ -135,8 +175,9 @@ void MyOwnPage::constructIHM(){
 //! \brief MyOwnPage::setConnections
 //!
 void MyOwnPage::setConnections(){
-    connect(this->sButton, SIGNAL(clicked()), this->myRssCourse, SLOT(show()));
-    connect(this->tButton, SIGNAL(clicked()), this->mySchedulePage, SLOT(show()));
+    connect(this->myRssButton, SIGNAL(clicked()), this->myRssCourse, SLOT(show()));
+    connect(this->myScheduleButton, SIGNAL(clicked()), this->mySchedulePage, SLOT(show()));
+    connect(this->idAvatarCLabel, SIGNAL(clicked()), this, SLOT(modifierPersonnelImage()));
 }
 
 //!-----------------------------------------------------------------------------------------

@@ -60,16 +60,16 @@ private:
     QComboBox* citySwitchComoBox;
     QLabel* cityLabel;
 
-    QStandardItem* artItem;
-    QStandardItem* sportItem;
-    QStandardItem* lifeStyleItem;
-    QStandardItem* bussinessItem;
-    QStandardItem* accountingItem;
-    QStandardItem* moreItem;
-    QStandardItem* collegeItem;
-    QStandardItem* educationItem;
-    QStandardItem* beBetterManItem;
-    QStandardItem* entertainmentItem;
+    QStandardItem* languageItem;
+    QStandardItem* instrumentItem;
+    QStandardItem* dancingItem;
+    QStandardItem* earlyEducationItem;
+    QStandardItem* vocalItem;
+    QStandardItem* driveItem;
+    QStandardItem* basicSubjectItem;
+    QStandardItem* sportsItem;
+    QStandardItem* managementItem;
+    QStandardItem* martialItem;
 
     HottipsWidget* hottipsWidget;
     PrivilegeWidget* privilegeWidget;

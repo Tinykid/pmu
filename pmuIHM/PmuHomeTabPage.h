@@ -10,6 +10,8 @@
 #include <QBitmap>
 #include "PmuMainPage.h"
 #include "MyOwnPage.h"
+#include "PmuNeighborPage.h"
+#include "SelectPage.h"
 
 class PmuHomeTabPage : public QTabWidget
 {
@@ -23,16 +25,20 @@ public:
 private:
     int width;
     int height;
+    SelectPage *selectPage;
+
     QPixmap* pixmap;
     QFont *caracterStyle;
 
     PmuMainPage *pmumainPage;
-    QWidget *neighborPage;
-    QWidget *selectionPage;
+    PmuNeighborPage *neighborPage;
     MyOwnPage *myOwnPage;
+
 signals:
 
 public slots:
+    void optionClicked(int index);
+
 };
 
 #endif // PMUHOMETABPAGE_H

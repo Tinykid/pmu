@@ -7,16 +7,22 @@
 #include <QTimer>
 #include <QList>
 #include <QGesture>
+
 #include "ConnectToServer.h"
+#include "CurrentAction.h"
+#include "ReceptionTask.h"
 
 
 int main(int argc, char *argv[]){
 
     QApplication a(argc, argv);
 
-    ConnectToServer* connectToServer = new ConnectToServer();
+    CurrentAction* currentAction = new CurrentAction();
 
-    PmuEnterPage *pmuEnterPage = new PmuEnterPage(connectToServer);
+    ConnectToServer* connectToServer = new ConnectToServer(currentAction);
+
+    PmuEnterPage *pmuEnterPage = new PmuEnterPage(connectToServer, currentAction);
+
     pmuEnterPage->show();
 
     return a.exec();

@@ -20,13 +20,14 @@
 #include <QMenuBar>
 #include <QFont>
 #include "ConnectToServer.h"
+#include "ReceptionTask.h"
 
 class RegAndSignPage : public QWidget
 {
     Q_OBJECT
 
 public:
-    RegAndSignPage(int width, int height, bool flag, ConnectToServer* connectToServer);
+    RegAndSignPage(int width, int height, bool flag, ConnectToServer* connectToServer, CurrentAction* currentAction);
     ~RegAndSignPage();
 
     void initVariable();
@@ -37,6 +38,17 @@ public:
     void setState(bool flag);
 
 private:
+
+    //! TODO : wait for the reception task decode all the info neccesary
+//    class WaitingForResponse : public QThread{
+//        public:
+//            void run();
+//            RegAndSignPage *regAndSignPage;
+//    };
+
+//    WaitingForResponse waitingForResponse;
+
+    CurrentAction* currentAction;
     ConnectToServer* connectToServer;
 
     int width;

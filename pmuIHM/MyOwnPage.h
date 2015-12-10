@@ -9,9 +9,11 @@
 #include <QPushButton>
 #include <QScreen>
 #include <QFont>
+#include <QDialog>
 #include <QToolButton>
 #include "MyRssCourse.h"
 #include "MySchedulePage.h"
+#include "CLabel.h"
 
 class MyOwnPage : public QWidget
 {
@@ -24,34 +26,40 @@ public:
     void initial();
     void constructIHM();
     void setConnections();
+    void createDialog();
 private:
     MyRssCourse *myRssCourse;
     MySchedulePage *mySchedulePage;
 
-    QLabel* idAvatarLabel;
+    CLabel* idAvatarCLabel;
     QLabel* idAccountLabel;
     QLabel* idEmailLabel;
 
     QWidget* idWidget;
     QWidget* courseInfoWidget;
-    QWidget* fWidget;
-    QWidget* sWidget;
-    QWidget* tWidget;
-    QWidget* foWidget;
+    QWidget* myPublishedWidget;
+    QWidget* myRssWidget;
+    QWidget* myScheduleWidget;
+    QWidget* historyWidget;
 
-    QToolButton* fButton;
-    QToolButton* sButton;
-    QToolButton* tButton;
-    QToolButton* foButton;
+    QToolButton* myPublishedButton;
+    QToolButton* myRssButton;
+    QToolButton* myScheduleButton;
+    QToolButton* historyButton;
 
     QVBoxLayout* mainLayout;
     QVBoxLayout* idLayout;
-    QVBoxLayout* fLayout;
-    QVBoxLayout* sLayout;
-    QVBoxLayout* tLayout;
-    QVBoxLayout* foLayout;
+    QVBoxLayout* myPublishedLayout;
+    QVBoxLayout* myRssLayout;
+    QVBoxLayout* myScheduleLayout;
+    QVBoxLayout* historyLayout;
     QVBoxLayout* fBLayout;
     QGridLayout* coursesLayout;
+    QVBoxLayout *optionDialogLayout;
+
+    QDialog *optionDialog;
+    CLabel *selectFromCamera;
+    CLabel *selectFromPhotos;
 
     QFont *characterStyle;
     QString toolButtonStyle;
@@ -60,7 +68,7 @@ private:
     QScreen* screen;
 
 private slots:
-
+    void modifierPersonnelImage();
 
 };
 

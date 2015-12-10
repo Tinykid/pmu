@@ -23,10 +23,12 @@
 #include <QFont>
 #include "SearchWidget.h"
 #include "TemplateWidget.h"
-#include <QSwipeGesture>
 #include <QEvent>
+#include <QGesture>
 #include <QGestureEvent>
 
+//class QGestureEvent;
+//class QPanGesture;
 
 class ClassificationWidget : public QWidget
 {
@@ -40,18 +42,19 @@ public:
     void drawBackground();
     void constructIHM();
     void setConnections();
-    void grabGestures(const QList<Qt::GestureType> &gestures);
-    bool gestureEvent(QGestureEvent *event);
-    void swipeTriggered(QSwipeGesture* gesture);
-    void panTriggered(QPanGesture *gesture);
-    void pinchTriggered(QPinchGesture *gesture);
-    void tapTriggered(QTapGesture *gesture);
-    void tapAndHoldTriggered(QTapAndHoldGesture *gesture);
+//    void grabGestures(const QList<Qt::GestureType> &gestures);
+//    bool gestureEvent(QGestureEvent *event);
+//    void swipeTriggered(QSwipeGesture* gesture);
+//    void panTriggered(QPanGesture *gesture);
+//    void pinchTriggered(QPinchGesture *gesture);
+//    void tapTriggered(QTapGesture *gesture);
+//    void tapAndHoldTriggered(QTapAndHoldGesture *gesture);
 
     void display(QString textOption);
 
 protected:
-    virtual bool event(QEvent *event);
+//    virtual bool event(QEvent *event);
+    //bool event(QEvent *event);
 private:
     QPixmap* pixmap;
     QScreen* screen;
@@ -88,11 +91,14 @@ private:
 
     SearchWidget *searchPage;
 
-    qreal horizontalOffset;
-    qreal verticalOffset;
-    qreal rotationAngle;
-    qreal scaleFactor;
-    qreal currentStepScaleFactor;
+//    qreal horizontalOffset;
+//    qreal verticalOffset;
+//    qreal rotationAngle;
+//    qreal scaleFactor;
+//    qreal currentStepScaleFactor;
+
+    //bool gestureEvent(QGestureEvent *event);
+    //void panTriggered(QPanGesture*);
 
     int height;
     int width;

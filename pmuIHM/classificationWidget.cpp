@@ -12,98 +12,98 @@ ClassificationWidget::ClassificationWidget(QWidget *parent): QWidget(parent){
     this->drawBackground();
 }
 
-void ClassificationWidget::grabGestures(const QList<Qt::GestureType> &gestures)
-{
-    //! [enable gestures]
-    foreach (Qt::GestureType gesture, gestures)
-        grabGesture(gesture);
-    //! [enable gestures]
-}
+//void ClassificationWidget::grabGestures(const QList<Qt::GestureType> &gestures)
+//{
+//    //! [enable gestures]
+//    foreach (Qt::GestureType gesture, gestures)
+//        grabGesture(gesture);
+//    //! [enable gestures]
+//}
 
-bool ClassificationWidget::event(QEvent *event){
-    if (event->type() == QEvent::Gesture)
-            return gestureEvent(static_cast<QGestureEvent*>(event));
-        return QWidget::event(event);
-}
+//bool ClassificationWidget::event(QEvent *event){
+//    if (event->type() == QEvent::Gesture)
+//            return gestureEvent(static_cast<QGestureEvent*>(event));
+//        return QWidget::event(event);
+//}
 
-bool ClassificationWidget::gestureEvent(QGestureEvent *event){
-    if (QGesture *swipe = event->gesture(Qt::SwipeGesture))
-            swipeTriggered(static_cast<QSwipeGesture *>(swipe));
-    else if (QGesture *pan = event->gesture(Qt::PanGesture))
-           panTriggered(static_cast<QPanGesture *>(pan));
-       else if (QGesture *tap = event->gesture(Qt::TapGesture))
-           tapTriggered(static_cast<QTapGesture *>(tap));
-       else if (QGesture *tapAndHold = event->gesture(Qt::TapAndHoldGesture))
-           tapAndHoldTriggered(static_cast<QTapAndHoldGesture *>(tapAndHold));
-       if (QGesture *pinch = event->gesture(Qt::PinchGesture))
-           pinchTriggered(static_cast<QPinchGesture *>(pinch));
-       return true;
-}
+//bool ClassificationWidget::gestureEvent(QGestureEvent *event){
+//    if (QGesture *swipe = event->gesture(Qt::SwipeGesture))
+//            swipeTriggered(static_cast<QSwipeGesture *>(swipe));
+//    else if (QGesture *pan = event->gesture(Qt::PanGesture))
+//           panTriggered(static_cast<QPanGesture *>(pan));
+//       else if (QGesture *tap = event->gesture(Qt::TapGesture))
+//           tapTriggered(static_cast<QTapGesture *>(tap));
+//       else if (QGesture *tapAndHold = event->gesture(Qt::TapAndHoldGesture))
+//           tapAndHoldTriggered(static_cast<QTapAndHoldGesture *>(tapAndHold));
+//       if (QGesture *pinch = event->gesture(Qt::PinchGesture))
+//           pinchTriggered(static_cast<QPinchGesture *>(pinch));
+//       return true;
+//}
 
-void ClassificationWidget::swipeTriggered(QSwipeGesture *gesture)
-{
-    if (gesture->state() == Qt::GestureFinished) {
-        if (gesture->horizontalDirection() == QSwipeGesture::Down
-            || gesture->verticalDirection() == QSwipeGesture::Up) {
-            contentWidgetScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-            qDebug()<<"sb";
-            qCDebug(lcExample) << "swipeTriggered(): swipe to previous";
-        } else {
-            qCDebug(lcExample) << "swipeTriggered(): swipe to next";
-        }
-    }
-}
+//void ClassificationWidget::swipeTriggered(QSwipeGesture *gesture)
+//{
+//    if (gesture->state() == Qt::GestureFinished) {
+//        if (gesture->horizontalDirection() == QSwipeGesture::Down
+//            || gesture->verticalDirection() == QSwipeGesture::Up) {
+//            contentWidgetScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+//            qDebug()<<"sb";
+//            qCDebug(lcExample) << "swipeTriggered(): swipe to previous";
+//        } else {
+//            qCDebug(lcExample) << "swipeTriggered(): swipe to next";
+//        }
+//    }
+//}
 
-void ClassificationWidget::panTriggered(QPanGesture *gesture)
-{
-#ifndef QT_NO_CURSOR
-    switch (gesture->state()) {
-        case Qt::GestureStarted:
-        case Qt::GestureUpdated:
-            setCursor(Qt::SizeAllCursor);
-            break;
-        default:
-            setCursor(Qt::ArrowCursor);
-    }
-#endif
-    QPointF delta = gesture->delta();
-    qCDebug(lcExample) << "panTriggered():" << delta;
-    horizontalOffset += delta.x();
-    verticalOffset += delta.y();
-}
+//void ClassificationWidget::panTriggered(QPanGesture *gesture)
+//{
+//#ifndef QT_NO_CURSOR
+//    switch (gesture->state()) {
+//        case Qt::GestureStarted:
+//        case Qt::GestureUpdated:
+//            setCursor(Qt::SizeAllCursor);
+//            break;
+//        default:
+//            setCursor(Qt::ArrowCursor);
+//    }
+//#endif
+//    QPointF delta = gesture->delta();
+//    qCDebug(lcExample) << "panTriggered():" << delta;
+//    horizontalOffset += delta.x();
+//    verticalOffset += delta.y();
+//}
 
-void ClassificationWidget::pinchTriggered(QPinchGesture *gesture)
-{
-    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
-    if (changeFlags & QPinchGesture::RotationAngleChanged) {
-        const qreal value = gesture->property("rotationAngle").toReal();
-        const qreal lastValue = gesture->property("lastRotationAngle").toReal();
-        const qreal rotationAngleDelta = value - lastValue;
-        rotationAngle += rotationAngleDelta;
-        qCDebug(lcExample) << "pinchTriggered(): rotation by" << rotationAngleDelta << rotationAngle;
-    }
-    if (changeFlags & QPinchGesture::ScaleFactorChanged) {
-        qreal value = gesture->property("scaleFactor").toReal();
-        currentStepScaleFactor = value;
-        qCDebug(lcExample) << "pinchTriggered(): " << currentStepScaleFactor;
-    }
-    if (gesture->state() == Qt::GestureFinished) {
-        scaleFactor *= currentStepScaleFactor;
-        currentStepScaleFactor = 1;
-    }
-    update();
-}
+//void ClassificationWidget::pinchTriggered(QPinchGesture *gesture)
+//{
+//    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
+//    if (changeFlags & QPinchGesture::RotationAngleChanged) {
+//        const qreal value = gesture->property("rotationAngle").toReal();
+//        const qreal lastValue = gesture->property("lastRotationAngle").toReal();
+//        const qreal rotationAngleDelta = value - lastValue;
+//        rotationAngle += rotationAngleDelta;
+//        qCDebug(lcExample) << "pinchTriggered(): rotation by" << rotationAngleDelta << rotationAngle;
+//    }
+//    if (changeFlags & QPinchGesture::ScaleFactorChanged) {
+//        qreal value = gesture->property("scaleFactor").toReal();
+//        currentStepScaleFactor = value;
+//        qCDebug(lcExample) << "pinchTriggered(): " << currentStepScaleFactor;
+//    }
+//    if (gesture->state() == Qt::GestureFinished) {
+//        scaleFactor *= currentStepScaleFactor;
+//        currentStepScaleFactor = 1;
+//    }
+//    update();
+//}
 
 
-void ClassificationWidget::tapTriggered(QTapGesture *gesture)
-{
-    qCDebug(lcExample) << "tapTriggered():" ;
-}
+//void ClassificationWidget::tapTriggered(QTapGesture *gesture)
+//{
+//    qCDebug(lcExample) << "tapTriggered():" ;
+//}
 
-void ClassificationWidget::tapAndHoldTriggered(QTapAndHoldGesture *gesture)
-{
-    qCDebug(lcExample) << "tapAndHoldTriggered():";
-}
+//void ClassificationWidget::tapAndHoldTriggered(QTapAndHoldGesture *gesture)
+//{
+//    qCDebug(lcExample) << "tapAndHoldTriggered():";
+//}
 
 
 
@@ -153,7 +153,7 @@ void ClassificationWidget::initial(){
     gestures << Qt::SwipeGesture;
     gestures << Qt::TapGesture;
     gestures << Qt::TapAndHoldGesture;
-    this->grabGestures(gestures);
+    //this->grabGestures(gestures);
 }
 
 //!----------------------------------------------------------------------------------------------------

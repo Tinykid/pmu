@@ -1,15 +1,14 @@
 #include "RegAndSignPage.h"
 
-RegAndSignPage::RegAndSignPage(int width, int height, bool flag, ConnectToServer* connectToServer)
-    : QWidget(){
-
-
+RegAndSignPage::RegAndSignPage(int width, int height, bool flag, ConnectToServer* connectToServer, CurrentAction* currentAction)
+    : QWidget()
+{
 
     this->width = width;
     this->height = height;
     this->flag = flag;
     this->connectToServer = connectToServer;
-
+    this->currentAction = currentAction;
 
     this->initVariable();
     this->constructIHM();
@@ -95,11 +94,13 @@ void RegAndSignPage::constructIHM(){
     passwordLineEdit = new QLineEdit("12345678");
     passwordLineEdit->setFixedHeight(0.071*height);
     //passwordLineEdit->setPlaceholderText("密碼");
+    passwordLineEdit->setEchoMode(QLineEdit::Password);;
     passwordLineEdit->setStyleSheet("border: 1px solid gray; background-color:aliceBlue; color:gray");
 
     confirmPasswordLineEdit = new QLineEdit("12345678");
     confirmPasswordLineEdit->setFixedHeight(0.071*height);
     //confirmPasswordLineEdit->setPlaceholderText("確認密碼");
+    confirmPasswordLineEdit->setEchoMode(QLineEdit::Password);
     confirmPasswordLineEdit->setStyleSheet("border: 1px solid gray; background-color:aliceBlue; color:gray");
 
     phoneNumberLineEdit = new QLineEdit("18667654332");
@@ -173,17 +174,22 @@ void RegAndSignPage::sign(){
 
     if(!flag){
         connectToServer->composeRequestMessage("registerForm.email=" + emailAddressLineEdit->text());
-        connectToServer->composeRequestMessage("registerForm.password="+passwordLineEdit->text());
-        connectToServer->composeRequestMessage("registerForm.conformPassword="+confirmPasswordLineEdit->text());
-        connectToServer->composeRequestMessage("registerForm.telephone="+phoneNumberLineEdit->text());
-        connectToServer->composeRequestFinalMessage("registerForm.address="+addressLineEdit->text());
+        connectToServer->composeRequestMessage("registerForm.password=" + passwordLineEdit->text());
+        connectToServer->composeRequestMessage("registerForm.conformPassword=" + confirmPasswordLineEdit->text());
+        connectToServer->composeRequestMessage("registerForm.telephone=" + phoneNumberLineEdit->text());
+        connectToServer->composeRequestFinalMessage("registerForm.address=" + addressLineEdit->text());
         connectToServer->connectera("register.action");
+
+        this->currentAction->setCurrentAction("register.action");
+
+        ReceptionTask* receptionTask = new ReceptionTask(this->currentAction);
+        receptionTask->start();
 
     }
     else{
-        qDebug()<<"++++++++-";
-        emailAddressLineEdit->text();
-        passwordLineEdit->text();
+        connectToServer->composeRequestMessage("registerForm.email=" + emailAddressLineEdit->text());
+        connectToServer->composeRequestFinalMessage("registerForm.password=" + passwordLineEdit->text());
+        connectToServer->connectera("login.action");
     }
 }
 

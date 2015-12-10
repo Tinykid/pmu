@@ -15,7 +15,7 @@ MySchedulePage::MySchedulePage(int width, int height) : QWidget()
 //! \brief MySchedulePage::initVariable
 //!
 void MySchedulePage::initVariable(){
-
+    this->titleBarWidget = new PmuTitleBar(width, height, "我的課程表");
 }
 
 //!-----------------------------------------------------------------------------------------
@@ -23,29 +23,10 @@ void MySchedulePage::initVariable(){
 //! \brief MySchedulePage::constructIHM
 //!
 void MySchedulePage::constructIHM(){
-    this->returnButton = new QPushButton();
-    this->returnButton->setIcon(QIcon(":/images/return.png"));
-    this->returnButton->setIconSize(QSize(0.15*width,0.05*height));
-    this->returnButton->setFixedWidth(0.15*width);
-    this->returnButton->setStyleSheet("QPushButton{border: 0px;background-color:transparent; color: AliceBlue}"
-                                      "QPushButton:focus{padding: -2;}");
-
-    this->titleLabel = new QLabel("我的課程表");
-    this->titleLabel->setFont(QFont("Segoe UI",18,QFont::Normal,false));
-    this->titleLabel->setAlignment(Qt::AlignVCenter);
-    this->titleLabel->setStyleSheet("border: 0px ;border-radius: 0px;padding: 22px;background-color: transparent; color: AliceBlue");
-
-    this->titleBarWidget = new QWidget();
-    this->titleBarWidget->setFixedSize(width, height*0.06);
-    this->titleBarLayout = new QHBoxLayout(titleBarWidget);
-    this->titleBarLayout->addWidget(returnButton);
-    this->titleBarLayout->addWidget(titleLabel);
-    this->titleBarLayout->setMargin(0);
-    this->titleBarLayout->setSpacing(0);
 
     this->searchLineEdit = new QLineEdit();
-    this->searchLineEdit->setFixedHeight(height*0.053);
-    this->searchLineEdit->setPlaceholderText("srgjz");
+    this->searchLineEdit->setFixedSize(width*0.55, height*0.053);
+    this->searchLineEdit->setPlaceholderText("輸入關鍵字");
     this->searchLineEdit->setStyleSheet("QLineEdit{color:AliceBlue; border: 0px solid Gray; border-radius: 0px; color:rgb(0, 0, 0); background-color: azure; padding:0} "
                                         "QLineEdit:focus{border-style:outset; border-width:0px; border-radius: 0px; border-color: rgb(41, 237, 215); color:rgb(0, 0, 0); background-color: azure; } ");
 
@@ -57,10 +38,10 @@ void MySchedulePage::constructIHM(){
                                       "QPushButton:focus{padding: -2;}");
 
     this->sortComboBox = new QComboBox();
-    this->sortComboBox->setFixedSize(width*0.18, height*0.053);
-    this->sortComboBox->insertItem(0,"1");
-    this->sortComboBox->insertItem(1,"2");
-    this->sortComboBox->insertItem(2,"3");
+    this->sortComboBox->setFixedSize(width*0.3, height*0.053);
+    this->sortComboBox->insertItem(0,"按時間排序");
+    this->sortComboBox->insertItem(1,"按老師排序");
+    this->sortComboBox->insertItem(2,"按課程排序");
     this->sortComboBox->setStyleSheet( "QComboBox{color:gray;background-color:aliceblue;border:0px;border-radius:0px;padding:0px;}"
                                        //"QComboBox QListView{ border-style: none; background-color: qlineargradient(x1:0, y1:0, x2:1,y2:0, stop: 1 rgba(228, 41, 81, 100), stop: 0 rgba(234, 107, 101, 100));}"
                                        "QComboBox::drop-down{width: 88px;border: 0px;border-color:trantransparent;border-left-style:solid;border-top-style: none;border-bottom-style: none;border-right-style: none;}"
@@ -95,5 +76,5 @@ void MySchedulePage::constructIHM(){
 //! \brief MySchedulePage::setConnections
 //!
 void MySchedulePage::setConnections(){
-
+    this->connect(this->titleBarWidget->returnButton, SIGNAL(clicked()), this, SLOT(close()));
 }
