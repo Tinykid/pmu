@@ -4,7 +4,9 @@
 
 Q_LOGGING_CATEGORY(lcExample, "qt.examples.imagegestures")
 
-ClassificationWidget::ClassificationWidget(QWidget *parent): QWidget(parent){
+ClassificationWidget::ClassificationWidget(QWidget *parent): QWidget(parent), m_horizontalOffset(0), m_verticalOffset(0){
+    this->setAttribute(Qt::WA_AcceptTouchEvents);
+
     this->initial();
     this->constructIHM();
     this->setConnections();
@@ -105,6 +107,41 @@ ClassificationWidget::ClassificationWidget(QWidget *parent): QWidget(parent){
 //    qCDebug(lcExample) << "tapAndHoldTriggered():";
 //}
 
+//bool ClassificationWidget::event(QEvent *event){
+//    QEvent::Type t = event->type();
+//    switch (t) {
+//    case QEvent::TouchBegin:
+//        event->accept();
+//        return true;
+//    case QEvent::TouchUpdate:
+//        event->accept();
+//        return true;
+//    case QEvent::TouchEnd:
+//        event->accept();
+//        return true;
+//    case QEvent::TouchCancel:
+//        event->accept();
+//        return true;
+//    default:
+//        break;
+//    }
+
+//}
+
+
+bool ClassificationWidget::gestureEvent(QGestureEvent *event){
+    if (QGesture *pan = event->gesture(Qt::PanGesture))
+        panTriggered(static_cast<QPanGesture *>(pan));
+    return true;
+}
+
+void ClassificationWidget::panTriggered(QPanGesture *gesture){
+    QPointF delta = gesture->delta();
+    this->m_horizontalOffset += delta.x();
+    this->m_verticalOffset += delta.y();
+    update();
+
+}
 
 
 ClassificationWidget::~ClassificationWidget(){
@@ -147,13 +184,14 @@ void ClassificationWidget::initial(){
     this->searchPage = new SearchWidget();
     qDebug()<<"height = "<<this->height<<"width = "<<this->width;
 
-    QList<Qt::GestureType> gestures;
-    gestures << Qt::PanGesture;
-    gestures << Qt::PinchGesture;
-    gestures << Qt::SwipeGesture;
-    gestures << Qt::TapGesture;
-    gestures << Qt::TapAndHoldGesture;
-    //this->grabGestures(gestures);
+//    QList<Qt::GestureType> gestures;
+//    gestures << Qt::PanGesture;
+//    gestures << Qt::PinchGesture;
+//    gestures << Qt::SwipeGesture;
+//    gestures << Qt::TapGesture;
+//    gestures << Qt::TapAndHoldGesture;
+//    this->grabGestures(gestures);
+    this->grabGesture(Qt::PanGesture);
 }
 
 //!----------------------------------------------------------------------------------------------------
@@ -200,6 +238,7 @@ void ClassificationWidget::constructIHM(){
 
     //!create content bar area
     contentWidget = new QWidget();
+    contentWidget->setFixedWidth(width);
     //!--------------------
     this->mainLayout = new QVBoxLayout(contentWidget);
     mainLayout->addWidget(firstWidget);
@@ -212,7 +251,7 @@ void ClassificationWidget::constructIHM(){
     mainLayout->setSpacing(0);
 
     contentWidgetScrollArea = new QScrollArea();
-//    contentWidgetScrollArea->setFixedHeight(0.8*height);
+    contentWidgetScrollArea->setFixedWidth(width);
     contentWidgetScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     contentWidgetScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     contentWidgetScrollArea->setStyleSheet("QScrollBar:vertical {border: 0px; background: transparent; width: 20px;}"

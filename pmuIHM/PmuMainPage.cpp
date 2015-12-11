@@ -60,9 +60,10 @@ void PmuMainPage::constructMainWidget(){
     searchingButton->setStyleSheet("QPushButton{border-image: url(:/images/search.png); background-color:AliceBlue;border: 0px;}"
                                    "QPushButton:pressed{border-image: url(:/images/search1.png);background-color:AliceBlue;border: 0px;}"
                                    "QPushButton:focus{padding: -2;}");
-    somethingElseButton1 = new QPushButton("購物車");
-    somethingElseButton1->setFont(QFont("Segoe UI",14,QFont::Normal,false));
+    somethingElseButton1 = new QPushButton();
     somethingElseButton1->setFixedHeight(height*0.05);
+    somethingElseButton1->setIcon(QIcon(":/images/shoppingCart.png"));
+    somethingElseButton1->setIconSize(QSize(width*0.12, height*0.045));
     somethingElseButton1->setStyleSheet("QPushButton{background-color:transparent;color:aliceblue ;border:0px solid Gray; padding-left: 20px; padding-right: 20px; }"
                                         "QPushButton:focus{padding: -2;}");
     titleBar = new QFrame();

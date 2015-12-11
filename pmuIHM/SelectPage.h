@@ -5,6 +5,9 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QListWidget>
 
 class SelectPage : public QWidget
 {
@@ -20,10 +23,15 @@ private:
     int height;
 
     QWidget *titleBar;
-    QWidget *selectMainWidget;
+    QWidget *OptrionBarWidget;
+    QListWidget *selectListWidget;
     QVBoxLayout *mainLayout;
-
-
+    QHBoxLayout *titleBarLayout;
+    QLabel *areaOneLabel;
+    QLabel *areaTwoLabel;
+    QLabel *nameLabel;
+    QPushButton *shoppingCartButton;
+    QPushButton *scanCodeButton;
 
 signals:
 

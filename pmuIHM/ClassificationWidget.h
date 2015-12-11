@@ -27,8 +27,8 @@
 #include <QGesture>
 #include <QGestureEvent>
 
-//class QGestureEvent;
-//class QPanGesture;
+class QGestureEvent;
+class QPanGesture;
 
 class ClassificationWidget : public QWidget
 {
@@ -54,8 +54,13 @@ public:
 
 protected:
 //    virtual bool event(QEvent *event);
-    //bool event(QEvent *event);
+   // bool event(QEvent *event);
 private:
+    int height;
+    int width;
+    int buttonWidth;
+    int buttonHeight;
+
     QPixmap* pixmap;
     QScreen* screen;
     QFrame *titleBar;
@@ -97,13 +102,12 @@ private:
 //    qreal scaleFactor;
 //    qreal currentStepScaleFactor;
 
-    //bool gestureEvent(QGestureEvent *event);
-    //void panTriggered(QPanGesture*);
+    bool gestureEvent(QGestureEvent *event);
+    void panTriggered(QPanGesture*);
 
-    int height;
-    int width;
-    int buttonWidth;
-    int buttonHeight;
+    float m_horizontalOffset;
+    float m_verticalOffset;
+
 
 signals:
 
